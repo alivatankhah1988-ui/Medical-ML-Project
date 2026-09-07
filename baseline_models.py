@@ -14,6 +14,11 @@ df=pd.read_csv ("Diabet_dataset.csv", sep=";")
 #Remove Completely empty columns
 df=df.dropna(axis=1, how="all")
 
+print ("**********************")
+print ("**********************")
+print ("\nDataset shpe:" , df.shape)
+print ("Dataset columns:" , df.columns.tolist())
+
 
 #Features and target
 x= df.drop("Result", axis=1)
@@ -28,6 +33,17 @@ X_train, X_test, y_train, y_test =train_test_split(
     stratify=y
     )
 
+print ("*******************/////************")
+print("\nTraining target distribution:")
+print(y_train.value_counts())
+
+print("\nTest target distribution:")
+print(y_test.value_counts())
+
+print("\nFirst 10 test indices:")
+print(X_test.index[:10].tolist())
+
+print ("-----------------")
 print("Training set:   ", X_train.shape)
 print("Test set:   ", X_test.shape)
 
@@ -116,7 +132,7 @@ print (
 
 # HbA1c-only model
 x_hba1c= df[["HbA1c"]]
-y_hba1c= df[["Result"]]
+y_hba1c= df["Result"]
 
 X_train_h, X_test_h, y_train_h, y_test_h= train_test_split(
     x_hba1c,

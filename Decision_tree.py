@@ -1,5 +1,5 @@
 import pandas as pd
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import(
     accuracy_score,
@@ -11,6 +11,9 @@ from sklearn.metrics import(
 
 #load database
 df= pd.read_csv("Diabet_dataset.csv", delimiter=";")
+
+print ("\n HbA1c by Result:  ")
+print (df.groupby("Result")["HbA1c"].describe())
 
 #Remove Completely empty columns
 df=df.dropna(axis=1, how="all")
@@ -84,3 +87,61 @@ print ("Tree depth: ",
 model.tree_.max_depth)
 print("Number of levels: ", 
 model.tree_.n_leaves)
+
+#cross_validation
+cv_scores= cross_val_score(
+    model,
+    X,
+    y,
+    cv=5,
+    scoring= "accuracy"
+)
+
+print ("\nCross-Validation Results  ")
+print ("----------------------------")
+print ("scores:", cv_scores)
+print ("Mean Accuracy:", cv_scores.mean( ))
+print ("Standard Deviation:  ", cv_scores.std( ))
+
+from sklearn.tree import plot_tree
+import matplotlib.pyplot as plt
+
+#Visualize Decision Tree
+plt.figure (figsize=(20,10))
+
+plot_tree(
+    model,
+    feature_names=X.columns,
+    class_names= model.classes_ ,
+    filled= True
+)
+
+#plt.savefig("decision_tree.png", dpi=150, bbox_inches="tight")
+
+plt.show()
+
+
+depths= range(1,11)
+
+train_accuracies= []
+test_accuracies= []
+
+for depth in depths:
+    model= DecisionTreeClassifier(
+        max_depth=depth,
+        random_state=42
+    )
+    model.fit(X_train, y_train)
+
+    train_accuracy= model.score(X_train, y_train)
+    test_accuracy= model.score(X_test, y_test)
+
+    train_accuracies.append(train_accuracy)
+    test_accuracies.append(test_accuracy)
+
+    print (
+      f"Depth= {depth} | "
+      f"Train Accuracy= {train_accuracy:.4f}|"
+      f"Test Accuracy= {test_accuracy:.4f}"
+      )
+
