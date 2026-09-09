@@ -85,5 +85,6 @@ print("Precision:  ", round(Precision*100,2), "%")
 print("Recall:     ", round(recall*100,2), "%")
 print("F1_score:   ", round(f1*100,2), "%")
 
-print ("\nConfusion Matrix : " , cm)
+print ("\nConfusion Matrix : ")
+print (cm)
 
