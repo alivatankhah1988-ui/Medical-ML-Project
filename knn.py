@@ -12,8 +12,8 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 
 data=pd.read_csv("Diabet_dataset.csv",sep=";")
 
-#Remove Completely empty columns
-data=data.dropna(axis=1, how="all")#
+#Remove Completely empty columns 
+data=data.dropna(axis=1, how="all")
 
 print("Dataset shape:  ", data.shape)
 print(data.head())
