@@ -4,6 +4,8 @@ from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.pipeline import Pipeline
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import cross_val_score
+
 
 from sklearn.metrics import (
     accuracy_score, 
@@ -102,3 +104,24 @@ print("F1_score:   ", round(f1*100,2), "%")
 
 print ("\nConfusion Matrix : ")
 print (cm)
+
+#=======================
+# 10. 5-Fold Cross_validation
+#=======================
+cv_scores= cross_val_score(
+    model,
+    X,
+    y,
+    cv=5,
+    scoring="accuracy"
+)
+
+print("/n 5-Fold Cross_validation Results")
+print("----------------------------------")
+
+print("Fold Accuracies: ")
+for i, score in enumerate(cv_scores, start=1):
+    print(f"Fold{i}:  {score*100:.2f}%")
+
+print("Mean Accuracy: ", round(cv_scores.mean()*100,2),"%")
+print("std Deviation: ", round(cv_scores.std()*100,2), "%")
