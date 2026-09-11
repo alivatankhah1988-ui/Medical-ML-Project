@@ -5,6 +5,7 @@ from sklearn.preprocessing import OneHotEncoder , StandardScaler
 from sklearn.pipeline import Pipeline
 from sklearn.naive_bayes import GaussianNB
 from sklearn.metrics import accuracy_score, precision_score, recall_score,f1_score, confusion_matrix
+from sklearn.model_selection import cross_val_score
 
 
 #=======================
@@ -88,3 +89,24 @@ print("F1_score:   ", round(f1*100,2), "%")
 
 print ("\nConfusion Matrix : ")
 print (cm)
+
+#=======================
+# 10. 5-Fold Cross-Validation
+#=======================
+cv_scores=cross_val_score(
+    nb_model,
+    X,
+    y,
+    scoring="accuracy"
+)
+
+
+print("/n 5-Fold Cross_validation Results")
+print("----------------------------------")
+
+print("Fold Accuracies: ")
+for i, score in enumerate(cv_scores, start=1):
+    print(f"Fold{i}:  {score*100:.2f}%")
+
+print("Mean Accuracy: ", round(cv_scores.mean()*100,2),"%")
+print("std Deviation: ", round(cv_scores.std()*100,2), "%")
