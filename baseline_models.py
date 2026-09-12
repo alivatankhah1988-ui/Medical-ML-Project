@@ -6,6 +6,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.linear_model import LogisticRegression
 
 from sklearn.model_selection import StratifiedKFold, cross_validate
+from sklearn.metrics import confusion_matrix,accuracy_score,precision_score,recall_score,f1_score
 
 
 #load dataset
@@ -79,7 +80,18 @@ y_pred= model.predict(X_test)
 print("\npredictions:  ")
 print(y_pred)
 
-from sklearn.metrics import confusion_matrix,accuracy_score,precision_score,recall_score,f1_score
+
+#Overfitting Check
+train_pred= model.predict(X_train)
+train_accuracy= accuracy_score(y_train,train_pred)
+
+print("\nO v e r f i t t i n g C h e c k: ")
+print("-----------------------------------")
+print("Training Accuracy: ", round(train_accuracy*100,2),"%")
+print("Test Accuracy:     ", round(accuracy_score(y_test,y_pred)*100,2))
+
+
+
 
 print ("\n Confusion Matrix:    ")
 print(confusion_matrix(y_test, y_pred))
