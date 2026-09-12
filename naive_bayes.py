@@ -90,6 +90,20 @@ print("F1_score:   ", round(f1*100,2), "%")
 print ("\nConfusion Matrix : ")
 print (cm)
 
+
+#=======================
+# Overfitting Check
+#=======================
+train_pred= nb_model.predict(X_train)
+train_accuracy= accuracy_score(y_train, train_pred)
+
+print ("\n O v e r f i t t i n g C h e c k")
+print("-----------------------------------")
+print("Training Accuracy:  ", round(train_accuracy*100,2),"%")
+print("Test Accuracy    :  ", round(accuracy*100,2),"%")
+
+
+
 #=======================
 # 10. 5-Fold Cross-Validation
 #=======================
@@ -100,8 +114,8 @@ cv_scores=cross_val_score(
     scoring="accuracy"
 )
 
-
-print("/n 5-Fold Cross_validation Results")
+print("       ")
+print(" 5-Fold Cross_validation Results")
 print("----------------------------------")
 
 print("Fold Accuracies: ")
