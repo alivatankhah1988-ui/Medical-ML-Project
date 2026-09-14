@@ -117,6 +117,12 @@ print("Training Accuracy:  ", round(train_accuracy*100,2),"%")
 print("Test Accuracy    :  ", round(accuracy*100,2),"%")
 
 
+#=======================
+# Train Test Gap
+#=======================
+
+accuracy_gap = train_accuracy - accuracy
+print("Accuracy Gap:     ", round(accuracy_gap*100, 2), "%")
 
 #=======================
 # 10. 5-Fold Cross_validation
@@ -138,3 +144,24 @@ for i, score in enumerate(cv_scores, start=1):
 
 print("Mean Accuracy: ", round(cv_scores.mean()*100,2),"%")
 print("std Deviation: ", round(cv_scores.std()*100,2), "%")
+
+#=======================
+# 11. Feature Importance
+#=======================
+
+rf_model = model.named_steps["classifier"]
+feature_names = model.named_steps["preprocessor"].get_feature_names_out()
+
+feature_importance = pd.DataFrame({
+    "Feature": feature_names,
+    "Importance": rf_model.feature_importances_
+})
+
+feature_importance = feature_importance.sort_values(
+    by="Importance",
+    ascending=False
+)
+
+print("\n Feature Importance")
+print("--------------------")
+print(feature_importance.to_string(index=False))
