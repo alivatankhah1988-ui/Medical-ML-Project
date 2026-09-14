@@ -129,7 +129,7 @@ cv_scores= cross_val_score(
     scoring="accuracy"
 )
 
-print("/n 5-Fold Cross_validation Results")
+print("\n 5-Fold Cross_validation Results")
 print("----------------------------------")
 
 print("Fold Accuracies: ")
